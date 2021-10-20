@@ -1,0 +1,8 @@
+node_modules/
+el/
+eli1/
+/backend/node_modules
+/backend/.env
+/front/node_modules
+/front/.env
+
