@@ -16,6 +16,7 @@ var options = {
 };
 
 const insertKey = process.env.INSERT_KEY;
+const hostManolo = process.env.HOST_MANUEL;
 
 var session = snmp.createSession ("localhost", "public", options);
 
@@ -25,9 +26,13 @@ var session = snmp.createSession ("localhost", "public", options);
             "1.3.6.1.4.1.2021.11.9.0","1.3.6.1.4.1.2021.11.50.0","1.3.6.1.4.1.2021.11.10.0","1.3.6.1.4.1.2021.11.52.0",
             "1.3.6.1.4.1.2021.11.11.0","1.3.6.1.4.1.2021.11.53.0"];//var oids = ["1.3.6.1.2.1.1.3.0"];
 */
-            let obj = [];
-let obj2 = [];
+let obj = [];
 let obj1 = [];
+let obj2 = [];
+let obj3 = [];
+let obj4 = [];
+let obj5 = [];
+
 let vard;
 
 //vard=Cpu();
@@ -37,16 +42,16 @@ function insertEventNRSNMPCPU(obj) {
     // console.log("--------------");
 
    //console.log('totalfech',totalfech);
-   /*console.log('PARAM Afuera obj2 :',obj[0]);
+   /* console.log('PARAM Afuera obj2 :',obj[0]);
    console.log('PARAM Afuera obj2 :',obj[1]);
    console.log('PARAM Afuera obj2 :',obj[2]);
-   console.log('PARAM Afuera obj2 :',obj[3]);
+  console.log('PARAM Afuera obj2 :',obj[3]);
    console.log('PARAM Afuera obj2 :',obj[4]);
    console.log('PARAM Afuera obj2 :',obj[5]);
    console.log('PARAM Afuera obj2 :',obj[6]);
    console.log('PARAM Afuera obj2 :',obj[7]);
-   console.log('PARAM Afuera obj2 :',obj[8]);
-*/
+   console.log('PARAM Afuera obj2 :',obj[8]);*/
+
 
    
         console.log('llegue a insertar -----------------------------------');
@@ -64,6 +69,7 @@ function insertEventNRSNMPCPU(obj) {
             options['body'] = JSON.stringify(
                 {
                     'eventType': 'CPUSnmp',
+                    'HOST':hostManolo,
                     'carga1Min': obj[0],
                     'carga2Min': obj[1],
                     'carga3Min': obj[2],
@@ -171,6 +177,7 @@ function insertEventNRSNMPTime(obj) {
          options['body'] = JSON.stringify(
          {
          'eventType': 'IvanUptime',
+         'HOST':hostManolo,
          'description': obj[0],
          'uptime': obj[1],
          'name': obj[2],
@@ -216,10 +223,10 @@ function uptime(oids){
                   // console.log (parseFloat(varbinds[i].value));
                   // console.log (varbinds[i].value);
                    // obj.push(parseFloat(varbinds[3].value));
-                   obj1[i]=varbinds[i].value;
-                   obj.push(String(obj1[0]));
-                   obj.push(obj1[1]);
-                   obj.push(String(obj1[2]));
+                   obj3[i]=varbinds[i].value;
+                   obj2.push(String(obj3[0]));
+                   obj2.push(obj3[1]);
+                   obj2.push(String(obj3[2]));
                
     
                    
@@ -228,10 +235,10 @@ function uptime(oids){
     
         }
     //console.log('PARAM SOLO :',obj);
-        if(obj!=null){
-            insertEventNRSNMPTime(obj);
+        if(obj2!=null){
+            insertEventNRSNMPTime(obj2);
         }else{
-            console.log(obj.push('Sin Dato'));
+            console.log(obj2.push('Sin Dato'));
         }
     });
     
@@ -245,8 +252,8 @@ function insertEventNRSNMPMem(obj) {
 
    //console.log('totalfech',totalfech);
 
-
- /*  console.log('PARAM Afuera obj2 :',obj[0]);
+/*
+   console.log('PARAM Afuera obj2 :',obj[0]);
    console.log('PARAM Afuera obj2 :',obj[1]);
    console.log('PARAM Afuera obj2 :',obj[2]);
    console.log('PARAM Afuera obj2 :',obj[3]);
@@ -254,8 +261,8 @@ function insertEventNRSNMPMem(obj) {
    console.log('PARAM Afuera obj2 :',obj[5]);
    console.log('PARAM Afuera obj2 :',obj[6]);
    console.log('PARAM Afuera obj2 :',obj[7]);
-*/
 
+*/
    
         console.log('llegue a insertar -----------------------------------');
         var headers = {
@@ -271,15 +278,15 @@ function insertEventNRSNMPMem(obj) {
        
         options['body'] = JSON.stringify(
         {
-        'eventType': 'Reiniermem',
+        'eventType': 'MemoriaSNMP',
+        'HOST':hostManolo,
         'Total': obj[0],
-        'Used': obj[1],
-        'Free': obj[2],
-        'Shared': obj[3],
-        'Buffered': obj[4],
-        'Cached': obj[5],
-        'Swap': obj[6],
-        'Swap': obj[7],
+        'Free': obj[1],
+        'Shared': obj[2],
+        'Buffered': obj[3],
+        'Cached': obj[4],
+        'Total Swap Size': obj[5],
+        'Available Swap Space': obj[6],
         
        }
         );
@@ -325,25 +332,24 @@ function mem(oids){
                   // console.log (parseFloat(varbinds[i].value));
                   // console.log (varbinds[i].value);
                    // obj.push(parseFloat(varbinds[3].value));
-                   obj1[i]=varbinds[i].value;
-                   obj.push(parseFloat(obj1[0]));
-                   obj.push(parseFloat(obj1[1]));
-                   obj.push(parseFloat(obj1[2]));
-                   obj.push(parseFloat(obj1[3]));
-                   obj.push(parseFloat(obj1[4]));
-                   obj.push(parseFloat(obj1[5]));
-                   obj.push(parseFloat(obj1[6]));
-                   obj.push(parseFloat(obj1[7]));
+                   obj5[i]=varbinds[i].value;
+                   obj4.push(parseFloat(obj5[0]));
+                   obj4.push(parseFloat(obj5[1]));
+                   obj4.push(parseFloat(obj5[2]));
+                   obj4.push(parseFloat(obj5[3]));
+                   obj4.push(parseFloat(obj5[4]));
+                   obj4.push(parseFloat(obj5[5]));
+                   obj4.push(parseFloat(obj5[6]));
                    
                    //console.log(obj[i]);
               
     
         }
     //console.log('PARAM SOLO :',obj);
-        if(obj!=null){
-            insertEventNRSNMPMem(obj);
+        if(obj4!=null){
+            insertEventNRSNMPMem(obj4);
         }else{
-            console.log(obj.push('Sin Dato'));
+            console.log(obj4.push('Sin Dato'));
         }
     });
     
